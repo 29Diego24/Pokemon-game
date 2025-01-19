@@ -1,18 +1,18 @@
 Pokeball/200/Catches Pokemon
 Great Ball/600/Greater chance of catching Pokemon than a Pokeball
 Ultra Ball/1200/Greater chance of catching Pokemon than a Great Ball
-Revive/1500/Recovers a fainted Pokemon to half max HP
-Max Revive/3000/Revives a fainted Pokemon to max HP
+Revive/850/Recovers a fainted Pokemon to half max HP
+Max Revive/1500/Revives a fainted Pokemon to max HP
 Soda Pop/600/Recovers 25HP
 Potion/300/Restores 10HP
 Super Potion/350/Restores 15HP
-Max Potion/2500/Restores all HP
+Max Potion/1500/Restores all HP
 Lemonade/650/Restores 35HP
-HP Up/5000/Raises max HP
+HP Up/2500/Raises max HP
 Hyper Potion/900/Restores 50HP
 Fresh Water/50/Recovers 5HP
-Full Heal/2500/Cures all status ailments
-Full Restore/5000/Restores all HP and cures all status ailments
+Full Heal/1000/Cures all status ailments
+Full Restore/2500/Restores all HP and cures all status ailments
 Dire Hit/650/Raises chances of a Critical Hit in battle (does not stack)
 Ice Heal/250/Cures Freeze
 Antidote/100/Cures Poison

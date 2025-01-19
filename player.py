@@ -65,7 +65,21 @@ with open("shopItems.txt", "r") as shopItems:
             time.sleep(2)
             print(f"Welcome {self._player} to: ")
             time.sleep(3)
-            print(pyfiglet.figlet_format("Pokemon"))
+            text = pyfiglet.figlet_format("Pokemon")
+            text = text.splitlines()
+            total_lines = len(text)
+            black_line_index = total_lines // 2
+            split_point = black_line_index
+            colored_text = ""
+            for i, line in enumerate(text):
+                if i < split_point:
+                    color = Fore.RED
+                elif i == black_line_index:
+                    color = Fore.BLACK
+                else:
+                    color = Fore.WHITE
+                colored_text += f"{color}{line}{Style.RESET_ALL}\n"
+            print(colored_text)
             time.sleep(2)
             self.getPokemon()  # Call method to let the player choose their first Pokémon
         
@@ -915,6 +929,10 @@ with open("shopItems.txt", "r") as shopItems:
                             item = list(self._inventory.keys())[choice]
                             if item == "rare candy":
                                 self.useCandy()
+                                valid = True
+                                func()
+                            if item == "pp up":
+                                self.resetPP()
                                 valid = True
                                 func()
                             if item in ["pokeball", "great ball", "ultra ball"]:
