@@ -246,6 +246,8 @@ class Pokemon:
     
     def reset_pp(self, attackIndex):
         self._pp[attackIndex-1] = self._maxpp[attackIndex-1]
+        print(f"{self._name}'s attack {list(self._attacks.keys())[attackIndex-1]}'s PP was reset to {self._maxpp[attackIndex-1]}")
+        return
 
     def isFainted(self):
         return self._fainted

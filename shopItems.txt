@@ -20,4 +20,4 @@ Awakening/250/Cures Sleep
 Burn Heal/250/Cures Burn
 Paralyze Heal/250/Cures Paralysis
 Rare Candy/50/Raises your pokemons level by 1
-PP Up/500/Restores your pokemon power points for a certain move
+PP Up/50/Restores your pokemon power points for a certain move

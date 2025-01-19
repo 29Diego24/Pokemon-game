@@ -492,6 +492,21 @@ with open("shopItems.txt", "r") as shopItems:
                                     self._other.turnOver()
                                 time.sleep(3)
                                 self.fightOptions(trainer)
+                            if item == "pp up":
+                                self.resetPP()
+                                valid = True
+                                if trainer:
+                                    self._trainer.attack()
+                                else:
+                                    self._other.attack(random.randint(1, len(self._other._attacks)), self._pokemon)
+
+                                self._pokemon.turnOver()
+                                if trainer:
+                                    self._trainer._pokemon.turnOver()
+                                else:
+                                    self._other.turnOver()
+                                time.sleep(3)
+                                self.fightOptions(trainer)
                             if trainer:
                                 if item in ["pokeball", "great ball", "ultra ball"]:
                                     print("You cannot use those in a trainer battle")
@@ -573,6 +588,44 @@ with open("shopItems.txt", "r") as shopItems:
                     print(f"  - Evolve Level: {poke._evolvelevel}")
                 else:
                     print(Fore.RED + f"  {poke._name} cannot evolve" + Fore.RESET)
+
+        def resetPP(self):
+            print("----------------------------")
+            self.printPokemon()  # Print the list of Pokémon
+            print("----------------------------")
+            valid = False
+            while not valid:
+                try:
+                    choice = int(input(f"Enter the number of the Pokémon you want to use the PP Up on: ")) - 1  # Adjust for 0-based index
+                    
+                    if 0 <= choice < len(self._pokemonClassList):
+                        pokemon = self._pokemonClassList[choice]
+                        valid = True  # Exit the loop once valid selection is made
+                    else:
+                        print(f"Invalid choice. Please select a number between 1 and {len(self._pokemonClassList)}.")
+                except ValueError:
+                    print("Invalid input. Please enter a valid number.")
+
+            
+            while True:
+                try:
+                    num_moves = len(pokemon._attacks)
+                    if num_moves > 1:
+                        attack = int(input(f"{pokemon._name} has {num_moves} moves. Which one do you want (1-{num_moves})? "))
+                    else:
+                        attack = int(input(f"{pokemon._name} has {num_moves} move. Which one do you want (1)? "))
+                    
+                    # Validate attack selection
+                    if 1 <= attack <= num_moves:
+                        break  # Exit loop if the input is valid
+                    else:
+                        print(f"Invalid choice. Please choose a number between 1 and {num_moves}.")
+                except ValueError:
+                    print("Invalid input. Please enter a number.")
+
+            pokemon.reset_pp(attack)
+            return
+            
 
         def useCandy(self, trainer=False):
             print("----------------------------")
