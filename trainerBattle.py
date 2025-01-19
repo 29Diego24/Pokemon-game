@@ -94,11 +94,11 @@ class Trainer:
             if not available_pokemon:
                 return True
             
-    def next_largest(self, max_val):
+    def next_largest(self, max_vals):
         arr = list(self._pokemon._attacks.values())
         second_largest = arr[0]
         for num in arr:
-            if num > second_largest and num != max_val:
+            if num > second_largest and num not in max_vals:
                 second_largest = num
         return second_largest 
 
@@ -121,9 +121,14 @@ class Trainer:
         # Determine the strongest attack.
         strongest_attack = max(self._pokemon._attacks.values())
         attack_index = list(self._pokemon._attacks.values()).index(strongest_attack) + 1
+        largest = [strongest_attack]
         # Check if we can faint the opponent.
         if self._other._hp <= strongest_attack:
-            self._pokemon.attack(attack_index, self._other)
+            valid = self._pokemon.attack(attack_index, self._other)
+            while not valid:
+                largest.append(self.next_largest(strongest_attack))
+                attack_index = list(self._pokemon._attacks.values()).index(largest[-1]) + 1
+                valid = self._pokemon.attack(attack_index, self._other)
             return
         
         if len(available_pokemon) >= 2:
@@ -138,10 +143,18 @@ class Trainer:
                         if len(available_pokemon) == 3:
                             self.switch_to_valid_pokemon()
                             return
-                self._pokemon.attack(attack_index, self._other)
+                valid = self._pokemon.attack(attack_index, self._other)
+                while not valid:
+                    largest.append(self.next_largest(strongest_attack))
+                    attack_index = list(self._pokemon._attacks.values()).index(largest[-1]) + 1
+                    valid = self._pokemon.attack(attack_index, self._other)
                 return
             else:
-                self._pokemon.attack(attack_index, self._other)
+                valid = self._pokemon.attack(attack_index, self._other)
+                while not valid:
+                    largest.append(self.next_largest(strongest_attack))
+                    attack_index = list(self._pokemon._attacks.values()).index(largest[-1]) + 1
+                    valid = self._pokemon.attack(attack_index, self._other)
                 return
 
         # Consider switching Pokémon or healing.
@@ -151,14 +164,25 @@ class Trainer:
                 return
             else:
                 if not self.heal(True):
-
-                    self._pokemon.attack(attack_index, self._other)
-                    return
+                    valid = self._pokemon.attack(attack_index, self._other)
+                    while not valid:
+                        largest.append(self.next_largest(strongest_attack))
+                        attack_index = list(self._pokemon._attacks.values()).index(largest[-1]) + 1
+                        valid = self._pokemon.attack(attack_index, self._other)
+                        return
 
         elif self._pokemon._hp <= self._pokemon._fullhp / 3:
             if not self.heal():
-                self._pokemon.attack(attack_index, self._other)
+                valid = self._pokemon.attack(attack_index, self._other)
+                while not valid:
+                    largest.append(self.next_largest(strongest_attack))
+                    attack_index = list(self._pokemon._attacks.values()).index(largest[-1]) + 1
+                    valid = self._pokemon.attack(attack_index, self._other)
                 return
         else:
-            self._pokemon.attack(attack_index, self._other)
+            valid = self._pokemon.attack(attack_index, self._other)
+            while not valid:
+                largest.append(self.next_largest(strongest_attack))
+                attack_index = list(self._pokemon._attacks.values()).index(largest[-1]) + 1
+                valid = self._pokemon.attack(attack_index, self._other)
             return
