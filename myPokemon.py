@@ -95,9 +95,9 @@ class Pokemon:
         else:
             print(f"Level: {self._level}")
         if self._hp <= self._fullhp/4:
-            print(f"HP: {Fore.RED + self._hp + Fore.RESET}/{self._fullhp}")
+            print(f"HP: {Fore.RED + str(self._hp) + Fore.RESET}/{self._fullhp}")
         if self._hp <= self._fullhp/2:
-            print(f"HP: {Fore.YELLOW + self._hp + Fore.RESET}/{self._fullhp}")
+            print(f"HP: {Fore.YELLOW + str(self._hp) + Fore.RESET}/{self._fullhp}")
         else:
             print(f"HP: {self._hp}/{self._fullhp}")
         print("Attacks:")
@@ -243,6 +243,9 @@ class Pokemon:
         self._fainted = False
         self._pp = self._maxpp.copy()
         return
+    
+    def reset_pp(self, attackIndex):
+        self._pp[attackIndex-1] = self._maxpp[attackIndex-1]
 
     def isFainted(self):
         return self._fainted
