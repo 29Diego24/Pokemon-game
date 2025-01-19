@@ -430,7 +430,7 @@ with open("shopItems.txt", "r") as shopItems:
                     self._other.attack(random.randint(1, len(self._other._attacks)), self._pokemon)
                     print("\n")
                     # Execute the selected attack
-                    if not self._pokemon.attack(attack, self._trainer._pokemon):
+                    if not self._pokemon.attack(attack, self._other):
                         self.battle(trainer)       
             else:
                 if trainer:
@@ -441,7 +441,7 @@ with open("shopItems.txt", "r") as shopItems:
                     self._trainer.attack()   
                 else:
                     # Execute the selected attack
-                    if not self._pokemon.attack(attack, self._trainer._pokemon):
+                    if not self._pokemon.attack(attack, self._other):
                         self.battle(trainer)
                     print("\n")
                     # Opponent attacks
@@ -891,10 +891,11 @@ with open("shopItems.txt", "r") as shopItems:
             # Let the player choose a starting Pokémon
             valid = False
             pokeList = ["PIKACHU", "CHARMANDER", "BULBASAUR", "SQUIRTLE"]
+            color = [Fore.YELLOW, Fore.RED, Fore.GREEN, Fore.BLUE]
             while not valid:
                 print("----------------------------------")
                 for idx, poke in enumerate(pokeList, start=1):
-                    print(f"{idx}. {poke}")  # Display Pokémon name with its position number
+                    print(f"{idx}. {Style.BRIGHT + color[idx-1] + poke + Style.RESET_ALL}")  # Display Pokémon name with its position number
                 print("----------------------------------")
                 time.sleep(1)    
                 print("Which pokemon do you want? ")

@@ -291,7 +291,7 @@ class Pokemon:
             return True
         
         if self._pp[attackIndex-1] == 0:
-            print(f"{self._name} has no more power points for tha move.")
+            print(f"{self._name} has no more power points for that move.")
             return False
 
         # Get the attack name and damage from the attack list
