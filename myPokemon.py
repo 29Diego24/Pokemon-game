@@ -94,8 +94,12 @@ class Pokemon:
             self._level = self._trueLevel
         else:
             print(f"Level: {self._level}")
-        
-        print(f"HP: {self._hp}/{self._fullhp}")
+        if self._hp <= self._fullhp/4:
+            print(f"HP: {Fore.RED + self._hp + Fore.RESET}/{self._fullhp}")
+        if self._hp <= self._fullhp/2:
+            print(f"HP: {Fore.YELLOW + self._hp + Fore.RESET}/{self._fullhp}")
+        else:
+            print(f"HP: {self._hp}/{self._fullhp}")
         print("Attacks:")
         for attack_name, damage in self._attacks.items():
             print(f"  - {attack_name}: {damage} damage")
