@@ -963,10 +963,12 @@ with open("shopItems.txt", "r") as shopItems:
             valid = False
             pokeList = ["PIKACHU", "CHARMANDER", "BULBASAUR", "SQUIRTLE"]
             color = [Fore.YELLOW, Fore.RED, Fore.GREEN, Fore.BLUE]
+            type = ["Electric Type", "Fire Type", "Grass Type", "Water Type"]
             while not valid:
                 print("----------------------------------")
                 for idx, poke in enumerate(pokeList, start=1):
                     print(f"{idx}. {Style.BRIGHT + color[idx-1] + poke + Style.RESET_ALL}")  # Display Pokémon name with its position number
+                    print(f"  - {Style.BRIGHT + color[idx-1] + type[idx-1] + Style.RESET_ALL}")
                 print("----------------------------------")
                 time.sleep(1)    
                 print("Which pokemon do you want? ")
@@ -979,12 +981,13 @@ with open("shopItems.txt", "r") as shopItems:
                 if pokemon in [1,2,3,4]:
                     poke = pokeList[pokemon-1]
                     # poke = "Charizard"
-                    print(f"You chose {poke}")
+                    print(f"You chose {color[pokemon-1] + poke}")
                     self._pokemonList.append(poke.upper())  # Add chosen Pokémon to the list
                     valid = True  # Exit the loop when a valid choice is made
                 else:
                     print("Sorry I do not have that. Pick something else.")  # Invalid choice message
                     time.sleep(2)
+            print(Style.RESET_ALL)
             # Get Pokémon data using the `card` module
             data = card.get_all_hero_data(poke.lower())  # Retrieve Pokémon data
             self._pokemonCreated = card.get_card_from_pokemon(data)  # Create a card for the chosen Pokémon

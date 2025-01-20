@@ -1,6 +1,6 @@
 Pokeball/200/Catches Pokemon
 Great Ball/600/Greater chance of catching Pokemon than a Pokeball
-Ultra Ball/1200/Greater chance of catching Pokemon than a Great Ball
+Ultra Ball/800/Greater chance of catching Pokemon than a Great Ball
 Revive/850/Recovers a fainted Pokemon to half max HP
 Max Revive/1500/Revives a fainted Pokemon to max HP
 Soda Pop/600/Recovers 25HP
@@ -19,5 +19,5 @@ Antidote/100/Cures Poison
 Awakening/250/Cures Sleep
 Burn Heal/250/Cures Burn
 Paralyze Heal/250/Cures Paralysis
-Rare Candy/50/Raises your pokemons level by 1
-PP Up/50/Restores your pokemon power points for a certain move
+Rare Candy/1000/Raises your pokemons level by 1
+PP Up/650/Restores your pokemon power points for a certain move

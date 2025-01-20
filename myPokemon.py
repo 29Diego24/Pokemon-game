@@ -96,7 +96,7 @@ class Pokemon:
             print(f"Level: {self._level}")
         if self._hp <= self._fullhp/4:
             print(f"HP: {Fore.RED + str(self._hp) + Fore.RESET}/{self._fullhp}")
-        if self._hp <= self._fullhp/2:
+        elif self._hp <= self._fullhp/2:
             print(f"HP: {Fore.YELLOW + str(self._hp) + Fore.RESET}/{self._fullhp}")
         else:
             print(f"HP: {self._hp}/{self._fullhp}")
