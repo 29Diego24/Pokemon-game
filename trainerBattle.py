@@ -130,10 +130,6 @@ class Trainer:
                 attack_index = list(self._pokemon._attacks.values()).index(largest[-1]) + 1
                 valid = self._pokemon.attack(attack_index, self._other)
             return
-        
-        if len(available_pokemon) >= 2:
-            if strongest_attack <= 12:
-                self.switch_to_valid_pokemon()
 
         # check if the other pokemons attack is too strong
         if predicted_damage > 30:
@@ -155,6 +151,11 @@ class Trainer:
                     largest.append(self.next_largest(strongest_attack))
                     attack_index = list(self._pokemon._attacks.values()).index(largest[-1]) + 1
                     valid = self._pokemon.attack(attack_index, self._other)
+                return
+            
+        if len(available_pokemon) > 3:
+            if strongest_attack <= 12:
+                self.switch_to_valid_pokemon()
                 return
 
         # Consider switching Pokémon or healing.
