@@ -371,8 +371,12 @@ with open("shopItems.txt", "r") as shopItems:
 
                 if self._trainer.isWhited():
                     print("The trainer has been defeated")
-                    reward = random.randint(20, 99) * self._trainer._pokemon._trueLevel * 3
-                    reward = min(reward, 25000)
+                    reward = random.randint(20, 99) * self._trainer._pokemon._trueLevel
+                    if reward <= 1000:
+                        reward*=3
+                    elif reward <= 2000:
+                        reward*=2
+                    reward = min(reward, 4500)
                     print(f"You got {reward} pokedollars!")
                     self._money += reward
                     self.options()
@@ -962,7 +966,7 @@ with open("shopItems.txt", "r") as shopItems:
             # Let the player choose a starting Pokémon
             valid = False
             pokeList = ["PIKACHU", "CHARMANDER", "BULBASAUR", "SQUIRTLE"]
-            color = [Fore.YELLOW, Fore.RED, Fore.GREEN, Fore.BLUE]
+            color = [Fore.LIGHTYELLOW_EX, Fore.LIGHTRED_EX, Fore.LIGHTGREEN_EX, Fore.LIGHTCYAN_EX]
             type = ["Electric Type", "Fire Type", "Grass Type", "Water Type"]
             while not valid:
                 print("----------------------------------")

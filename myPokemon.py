@@ -102,16 +102,39 @@ class Pokemon:
             print(f"HP: {self._hp}/{self._fullhp}")
         print("Attacks:")
         for attack_name, damage in self._attacks.items():
-            print(f"  - {attack_name}: {damage} damage")
             index = list(self._attacks.keys()).index(attack_name)
+            energy_type = self._energy[index]
+            if "Lightning" in energy_type:
+                color = Fore.LIGHTYELLOW_EX
+            elif "Fire" in energy_type:
+                color = Fore.LIGHTRED_EX
+            elif "Physic" in energy_type:
+                color = Fore.MAGENTA
+            elif "Water" in energy_type:
+                color = Fore.LIGHTCYAN_EX
+            elif "Grass" in energy_type:
+                color = Fore.LIGHTGREEN_EX
+            elif "Fighting" in energy_type:
+                color = Fore.RED
+            elif "Metal" in energy_type:
+                color = Fore.LIGHTBLACK_EX
+            elif "Fairy" in energy_type:
+                color = Fore.LIGHTMAGENTA_EX
+            elif "Dragon" in energy_type:
+                color = Fore.BLUE
+            elif "Darkness" in energy_type:
+                color = Fore.BLACK
+            else:
+                color = Fore.RESET
+            print(f"  - {attack_name}: {damage} damage")
             if self._pp[index] <= 3:
                 print(f"  PP:  {Fore.RED + str(self._pp[index]) + Fore.RESET}/{self._maxpp[index]} ")
             elif self._pp[index] <= self._maxpp[index]/2:
                 print(f"  PP:  {Fore.YELLOW + str(self._pp[index]) + Fore.RESET}/{self._maxpp[index]} ")
             else:
                 print(f"  PP:  {str(self._pp[index])}/{self._maxpp[index]} ")
-        print("Attack Types:")
-        for energy_type in self._energy:
+
+            print(f"{color}  Attack Type:")
             if "Lightning" in energy_type:
                 print("  - Electric")
             elif "Fire" in energy_type:
@@ -134,6 +157,8 @@ class Pokemon:
                 print("  - Darkness")
             else:
                 print(" - Normal")
+            print(Fore.RESET)
+            
         if self._evolve:
             print(f"Evolves To: {self._evolve[0]}")
             print(f"Evolve Level: {self._evolvelevel}")
@@ -312,18 +337,24 @@ class Pokemon:
 
         # Determine the miss chance based on status conditions
         if self._paralyzed:
-            missChance = 5
+            missChance = 3
         elif self._freeze:
             missChance = 2
         elif self._sleep:
-            missChance = 4
+            missChance = 3
         else:
             missChance = 6
+        
+        if "Fighting" in self._energy[attackIndex-1]:
+            flinch = True
+            missChance = 4
 
         miss = random.randint(1, missChance) == 1  # Random chance to miss the attack
 
         # Handle the result of the attack
         if miss:
+            if flinch:
+                print(f"{self._name} flinched!")
             if self._paralyzed:
                 print(f"{self._name} is paralyzed! It can't move!")
             elif self._freeze:
@@ -340,19 +371,19 @@ class Pokemon:
                 print(f"{self._name} used {name} and dealt {int(damage)} damage to {other._name}!")
             
             if "Fire" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 5) == 1
+                chance = random.randint(1, 4) == 1
                 if chance:
                     other.giveeffect("burn")
             elif "Psychic" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 5) == 1
+                chance = random.randint(1, 4) == 1
                 if chance:
                     other.giveeffect("sleep")
             elif "Water" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 5) == 1
+                chance = random.randint(1, 4) == 1
                 if chance:
                     other.giveeffect("freeze")
             elif "Lightning" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 5) == 1
+                chance = random.randint(1, 4) == 1
                 if chance:
                     other.giveeffect("paralysis")
             elif "Grass" in self._energy[attackIndex-1]:
@@ -379,7 +410,7 @@ class Pokemon:
     def effectRunOutCount(self):
         self._allstats = ["paralysis", "poison", "burn", "freeze", "sleep", "dire hit"]
         for count in range(len(self._statusCount)):
-            if self._statusCount[count] == 4:
+            if self._statusCount[count] == 5:
                 self.effectRunOut(self._allstats[count])
         return
 
