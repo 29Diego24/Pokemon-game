@@ -13,11 +13,12 @@ Hyper Potion/900/Restores 50HP
 Fresh Water/50/Recovers 5HP
 Full Heal/1000/Cures all status ailments
 Full Restore/2500/Restores all HP and cures all status ailments
-Dire Hit/650/Raises chances of a Critical Hit in battle (does not stack)
+Dire Hit/300/Raises chances of a Critical Hit in battle (does not stack)
 Ice Heal/250/Cures Freeze
 Antidote/100/Cures Poison
 Awakening/250/Cures Sleep
 Burn Heal/250/Cures Burn
+Bitter Berry/250/Cures Confusion
 Paralyze Heal/250/Cures Paralysis
 Rare Candy/1000/Raises your pokemons level by 1
 PP Up/650/Restores your pokemon power points for a certain move

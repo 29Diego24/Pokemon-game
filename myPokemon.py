@@ -5,6 +5,10 @@ from colorama import Fore, Back, Style
 class Pokemon:
     def __init__(self, data, evolvelevel=20):
         # Initialize basic attributes of the Pokémon
+        if 'types' in data:
+            self._type = data['types'][0]
+        else:
+            self._type = ""
 
         self._fainted = False
         self._hp = int(data['hp'])
@@ -26,7 +30,9 @@ class Pokemon:
         self._burn = False
         self._freeze = False
         self._sleep = False
-        self._stats = ["paralysis", "poison", "burn", "freeze", "sleep"]  # List of status effects
+        self._confusion = False
+        self._flinch = False
+        self._stats = ["paralysis", "poison", "burn", "freeze", "sleep", "confusion", "flinch"]  # List of status effects
 
         self._critHigh = False
         self._statsUp = ["revive", "dire hit"]  # Special statuses like revive or crit boost
@@ -94,14 +100,63 @@ class Pokemon:
             self._level = self._trueLevel
         else:
             print(f"Level: {self._level}")
+
+        energy_type = self._type
+        if "Lightning" in energy_type:
+            color = Fore.LIGHTYELLOW_EX
+        elif "Fire" in energy_type:
+            color = Fore.LIGHTRED_EX
+        elif "Psychic" in energy_type:
+            color = Fore.MAGENTA
+        elif "Water" in energy_type:
+            color = Fore.LIGHTCYAN_EX
+        elif "Grass" in energy_type:
+            color = Fore.LIGHTGREEN_EX
+        elif "Fighting" in energy_type:
+            color = Fore.RED
+        elif "Metal" in energy_type:
+            color = Fore.LIGHTBLACK_EX
+        elif "Fairy" in energy_type:
+            color = Fore.LIGHTMAGENTA_EX
+        elif "Dragon" in energy_type:
+            color = Fore.BLUE
+        elif "Darkness" in energy_type:
+            color = Fore.BLACK
+        else:
+            color = Fore.RESET
+
         if self._hp <= self._fullhp/4:
             print(f"HP: {Fore.RED + str(self._hp) + Fore.RESET}/{self._fullhp}")
         elif self._hp <= self._fullhp/2:
             print(f"HP: {Fore.YELLOW + str(self._hp) + Fore.RESET}/{self._fullhp}")
         else:
             print(f"HP: {self._hp}/{self._fullhp}")
-        print(self._energy)
-        print("Attacks:")
+        if self._type != "":
+            print(f"{color}Type:")
+            if "Lightning" in energy_type:
+                print("  - Electric")
+            elif "Fire" in energy_type:
+                print("  - Fire")
+            elif "Psychic" in energy_type:
+                print("  - Psychic")
+            elif "Water" in energy_type:
+                print("  - Water")
+            elif "Grass" in energy_type:
+                print("  - Grass")
+            elif "Fighting" in energy_type:
+                print("  - Fighting")
+            elif "Metal" in energy_type:
+                print("  - Metal")
+            elif "Darkness" in energy_type:
+                print("  - Darkness")
+            elif "Fairy" in energy_type:
+                print("  - Fairy")
+            elif "Dragon" in energy_type:
+                print("  - Dragon")
+            else:
+                print(" - Normal")
+
+        print(f"{Fore.RESET}Attacks:")
         for attack_name, damage in self._attacks.items():
             index = list(self._attacks.keys()).index(attack_name)
             energy_type = self._energy[index]
@@ -140,7 +195,7 @@ class Pokemon:
                 print("  - Electric")
             elif "Fire" in energy_type:
                 print("  - Fire")
-            elif "Physic" in energy_type:
+            elif "Psychic" in energy_type:
                 print("  - Psychic")
             elif "Water" in energy_type:
                 print("  - Water")
@@ -150,10 +205,6 @@ class Pokemon:
                 print("  - Fighting")
             elif "Metal" in energy_type:
                 print("  - Metal")
-            elif "Fairy" in energy_type:
-                print("  - Fairy")
-            elif "Dragon" in energy_type:
-                print("  - Dragon")
             elif "Darkness" in energy_type:
                 print("  - Darkness")
             else:
@@ -173,15 +224,18 @@ class Pokemon:
         # Apply the status effect to the Pokémon
         if effect in self._stats:
             # Handle mutually exclusive status effects (paralysis, sleep, freeze)
-            if effect == "paralysis" and not self._paralyzed and not self._sleep and not self._freeze:
+            if effect == "paralysis" and not self._paralyzed and not self._sleep and not self._freeze and not self._confusion:
                 self._paralyzed = True
                 print(f"{self._name} was paralyzed!")
-            elif effect == "sleep" and not self._paralyzed and not self._sleep and not self._freeze:
+            elif effect == "sleep" and not self._paralyzed and not self._sleep and not self._freeze and not self._confusion:
                 self._sleep = True
                 print(f"{self._name} fell asleep!")
-            elif effect == "freeze" and not self._paralyzed and not self._sleep and not self._freeze:
+            elif effect == "freeze" and not self._paralyzed and not self._sleep and not self._freeze and not self._confusion:
                 self._freeze = True
                 print(f"{self._name} was frozen!")
+            elif effect == "confusion" and not self._paralyzed and not self._sleep and not self._freeze and not self._confusion:
+                self._confusion = True
+                print(f"{self._name} is now confused!")
             # Poison and burn are independent, so they can be applied even if other conditions exist
             elif effect == "poison" and not self._poisoned:
                 self._poisoned = True
@@ -219,6 +273,7 @@ class Pokemon:
                 "burn": "_burn",
                 "freeze": "_freeze",
                 "sleep": "_sleep",
+                "confusion": "_confusion"
             }
             status_attr = status_attributes.get(specialHl)
             if status_attr and getattr(self, status_attr):  # Check if the effect is active
@@ -267,6 +322,7 @@ class Pokemon:
         self._sleep = False
         self._freeze = False
         self._fainted = False
+        self._paralyzed = False
         self._pp = self._maxpp.copy()
         return
     
@@ -335,10 +391,13 @@ class Pokemon:
         crit_chance = 3 if self._critHigh else 6  # Adjust critical hit chance if applicable
         crit = random.randint(1, crit_chance)  # Determine if it's a critical hit
         # Apply special effects based on the attack's energy type
-        flinch = False
         # Determine the miss chance based on status conditions
         if self._paralyzed:
             missChance = 3
+        elif self._confusion:
+            missChance = 3
+        elif self._flinch:
+            missChance = 4
         elif self._freeze:
             missChance = 2
         elif self._sleep:
@@ -346,17 +405,25 @@ class Pokemon:
         else:
             missChance = 6
         
-        if "Fighting" in self._energy[attackIndex-1]:
-            flinch = True
-            missChance = 4
+        # if "Fighting" in self._energy[attackIndex-1]:
+        #     flinch = True
+        #     missChance = 4
 
         miss = random.randint(1, missChance) == 1  # Random chance to miss the attack
 
         # Handle the result of the attack
         if miss:
-            if flinch:
+            if self._flinch:
                 print(f"{self._name} flinched!")
-            if self._paralyzed:
+                self._flinch = False
+            elif self._confusion:
+                print(f"{self._name} is confused!")
+                print(f"{self._name} hit itself in confusion!")
+                if crit == 1:
+                    damage = int(damage * 1.5)  # Critical hit increases damage
+                    print(f"Critical hit!")
+                self.take_damage(damage/2)
+            elif self._paralyzed:
                 print(f"{self._name} is paralyzed! It can't move!")
             elif self._freeze:
                 print(f"{self._name} is frozen solid and can't move!")
@@ -376,9 +443,23 @@ class Pokemon:
                 if chance:
                     other.giveeffect("burn")
             elif "Psychic" or "Darkness" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 4) == 1
+                print(self._energy[attackIndex-1])
+                energyNormal = []
+                for energy in self._energy[attackIndex-1]:
+                    if energy == "Colorless":
+                        energyNormal.append(True)
+                if len(energyNormal) != len(self._energy[attackIndex-1]):
+                    chance = random.randint(1, 5) == 1
+                    if chance:
+                        effect = random.randint(1,2) == 1
+                        if effect:
+                            other.giveeffect("sleep")
+                        else:
+                            other.giveeffect("confusion")
+            elif "Fighting" in self._energy[attackIndex-1]:
+                chance = random.randint(1, 5) == 1
                 if chance:
-                    other.giveeffect("sleep")
+                    other.giveeffect("flinch")
             elif "Water" in self._energy[attackIndex-1]:
                 chance = random.randint(1, 3) == 1
                 if chance:
@@ -409,7 +490,7 @@ class Pokemon:
 
 
     def effectRunOutCount(self):
-        self._allstats = ["paralysis", "poison", "burn", "freeze", "sleep", "dire hit"]
+        self._allstats = ["paralysis", "poison", "burn", "freeze", "sleep", "dire hit", "confusion"]
         for count in range(len(self._statusCount)):
             if self._statusCount[count] == 5:
                 self.effectRunOut(self._allstats[count])
@@ -420,6 +501,7 @@ class Pokemon:
         if effect in self._stats:
             # Map the stat name to the corresponding attribute
             status_attributes = {
+                "confusion": "_confusion",
                 "paralysis": "_paralyzed",
                 "poison": "_poisoned",
                 "burn": "_burn",
@@ -447,6 +529,9 @@ class Pokemon:
                 self._statusCount[self._allstats.index(effect)] = 0
             if effect == "dire hit":
                 print(f"{self._name}'s dire hit ran out!")
+                self._statusCount[self._allstats.index(effect)] = 0
+            if effect == "confusion":
+                print(f"{self._name}'s snapped out of confusion!")
                 self._statusCount[self._allstats.index(effect)] = 0
         return
 

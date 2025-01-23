@@ -50,6 +50,7 @@ with open("shopItems.txt", "r") as shopItems:
                 "awakening": lambda p: p.special_potion("sleep"),
                 "burn heal": lambda p: p.special_potion("burn"),
                 "paralyze heal": lambda p: p.special_potion("paralysis"),
+                "bitter berry": lambda p: p.special_potion("confusion")
             }
             self._boxNames = []
             self._pokemonCreated = ""  # Placeholder for the created Pokémon object
