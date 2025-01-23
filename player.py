@@ -153,7 +153,7 @@ with open("shopItems.txt", "r") as shopItems:
                     else:
                         item = random.choice(self._shopItems)
                         print("You found an item!")
-                        print(f"You found a {item[0]}!")
+                        print(f"You found a {item[0].upper()}!")
                         if item[0] in self._inventory:
                             self._inventory[item[0]] += 1
                         else:

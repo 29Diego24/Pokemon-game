@@ -157,6 +157,7 @@ class Pokemon:
                 print(" - Normal")
 
         print(f"{Fore.RESET}Attacks:")
+        print(self._energy)
         for attack_name, damage in self._attacks.items():
             index = list(self._attacks.keys()).index(attack_name)
             energy_type = self._energy[index]
@@ -439,39 +440,33 @@ class Pokemon:
                 print(f"{self._name} used {name} and dealt {int(damage)} damage to {other._name}!")
             
             if "Fire" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 4) == 1
+                chance = random.randint(1, 5) == 1
                 if chance:
                     other.giveeffect("burn")
-            elif "Psychic" or "Darkness" in self._energy[attackIndex-1]:
-                print(self._energy[attackIndex-1])
-                energyNormal = []
-                for energy in self._energy[attackIndex-1]:
-                    if energy == "Colorless":
-                        energyNormal.append(True)
-                if len(energyNormal) != len(self._energy[attackIndex-1]):
-                    chance = random.randint(1, 5) == 1
-                    if chance:
-                        effect = random.randint(1,2) == 1
-                        if effect:
-                            other.giveeffect("sleep")
-                        else:
-                            other.giveeffect("confusion")
-            elif "Fighting" in self._energy[attackIndex-1]:
+            elif "Psychic" in self._energy[attackIndex-1] or self._type in ["Psychic", "Darkness"]:
                 chance = random.randint(1, 5) == 1
+                if chance:
+                    other.giveeffect("confusion")
+            elif "Fighting" in self._energy[attackIndex-1]:
+                chance = random.randint(1, 6) == 1
                 if chance:
                     other.giveeffect("flinch")
             elif "Water" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 3) == 1
+                chance = random.randint(1, 5) == 1
                 if chance:
                     other.giveeffect("freeze")
             elif "Lightning" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 4) == 1
+                chance = random.randint(1, 5) == 1
                 if chance:
                     other.giveeffect("paralysis")
             elif "Grass" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 3) == 1
+                chance = random.randint(1, 4) == 1
                 if chance:
-                    other.giveeffect("poison")
+                    effect = random.randint(1,2) == 1
+                    if effect:
+                        other.giveeffect("sleep")
+                    else:
+                        other.giveeffect("poison")
 
             other.take_damage(damage)
 
