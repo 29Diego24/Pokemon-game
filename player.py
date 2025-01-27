@@ -1102,6 +1102,7 @@ with open("shopItems.txt", "r") as shopItems:
                             pokemon_name = self._pokemonList.pop(choice)
                             self._pokemonClassList.insert(0, poke)
                             self._pokemonList.insert(0, pokemon_name)
+                            self._pokemon.special_potion("confusion")
                             self._pokemon = self._pokemonClassList[0]  # Set the selected Pokémon as the first position
                             valid = True  # Exit the loop when a valid choice is made
                             time.sleep(2)

@@ -323,7 +323,7 @@ class Pokemon:
         self._sleep = False
         self._freeze = False
         self._fainted = False
-        self._paralyzed = False
+        self._confusion = False
         self._pp = self._maxpp.copy()
         return
     
@@ -389,7 +389,7 @@ class Pokemon:
         # Get the attack name and damage from the attack list
         self._pp[attackIndex-1]-=1
         name, damage = list(self._attacks.items())[attackIndex - 1]
-        crit_chance = 3 if self._critHigh else 6  # Adjust critical hit chance if applicable
+        crit_chance = 2 if self._critHigh else 4  # Adjust critical hit chance if applicable
         crit = random.randint(1, crit_chance)  # Determine if it's a critical hit
         # Apply special effects based on the attack's energy type
         # Determine the miss chance based on status conditions
@@ -398,7 +398,7 @@ class Pokemon:
         elif self._confusion:
             missChance = 3
         elif self._flinch:
-            missChance = 4
+            missChance = 3
         elif self._freeze:
             missChance = 2
         elif self._sleep:
@@ -440,23 +440,23 @@ class Pokemon:
                 print(f"{self._name} used {name} and dealt {int(damage)} damage to {other._name}!")
             
             if "Fire" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 5) == 1
+                chance = random.randint(1, 4) == 1
                 if chance:
                     other.giveeffect("burn")
             elif "Psychic" in self._energy[attackIndex-1] or self._type in ["Psychic", "Darkness"]:
-                chance = random.randint(1, 5) == 1
+                chance = random.randint(1, 3) == 1
                 if chance:
                     other.giveeffect("confusion")
             elif "Fighting" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 6) == 1
+                chance = random.randint(1, 3) == 1
                 if chance:
                     other.giveeffect("flinch")
             elif "Water" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 5) == 1
+                chance = random.randint(1, 4) == 1
                 if chance:
                     other.giveeffect("freeze")
             elif "Lightning" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 5) == 1
+                chance = random.randint(1, 4) == 1
                 if chance:
                     other.giveeffect("paralysis")
             elif "Grass" in self._energy[attackIndex-1]:
