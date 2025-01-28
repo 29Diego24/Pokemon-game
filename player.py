@@ -1128,7 +1128,12 @@ with open("shopItems.txt", "r") as shopItems:
             Print the list of Pokémon owned by the player with numbers.
             """
             for idx, poke in enumerate(self._pokemonClassList, start=1):
-                print(f"{idx}. {poke._name}")  # Display Pokémon name with its position number
+                if poke.isFainted():
+                    print(f"{idx}. {Fore.RED}{poke._name}{Fore.RESET}")  # Display Pokémon name with its position number
+                elif poke._hp != poke.fullhp:
+                    print(f"{idx}. {Fore.LIGHTYELLOW_EX}{poke._name}{Fore.RESET}")  # Display Pokémon name with its position number
+                else:
+                    print(f"{idx}. {Fore.LIGHTBLUE_EX}{poke._name}")  # Display Pokémon name with its position number
        
         def printBox(self):
             """
