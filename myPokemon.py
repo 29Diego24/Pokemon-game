@@ -237,6 +237,8 @@ class Pokemon:
             elif effect == "confusion" and not self._paralyzed and not self._sleep and not self._freeze and not self._confusion:
                 self._confusion = True
                 print(f"{self._name} is now confused!")
+            if effect == "flinch" and not self._paralyzed and not self._sleep and not self._freeze and not self._confusion:
+                self._flinch = True
             # Poison and burn are independent, so they can be applied even if other conditions exist
             elif effect == "poison" and not self._poisoned:
                 self._poisoned = True
@@ -389,14 +391,14 @@ class Pokemon:
         # Get the attack name and damage from the attack list
         self._pp[attackIndex-1]-=1
         name, damage = list(self._attacks.items())[attackIndex - 1]
-        crit_chance = 2 if self._critHigh else 4  # Adjust critical hit chance if applicable
+        crit_chance = 3 if self._critHigh else 6  # Adjust critical hit chance if applicable
         crit = random.randint(1, crit_chance)  # Determine if it's a critical hit
         # Apply special effects based on the attack's energy type
         # Determine the miss chance based on status conditions
         if self._paralyzed:
             missChance = 3
         elif self._confusion:
-            missChance = 3
+            missChance = 2
         elif self._flinch:
             missChance = 3
         elif self._freeze:

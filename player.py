@@ -82,6 +82,9 @@ with open("shopItems.txt", "r") as shopItems:
                 colored_text += f"{color}{line}{Style.RESET_ALL}\n"
             print(colored_text)
             time.sleep(2)
+            intro = input("Do you want instructions on how to play (y/n): ")
+            if intro.lower() == "y":
+                self.intro()
             self.getPokemon()  # Call method to let the player choose their first Pokémon
         
         def printOptions(self):
@@ -251,9 +254,9 @@ with open("shopItems.txt", "r") as shopItems:
                         else:
                             valid = True  # Exit the loop if the player is done shopping
                     else:
-                        print("Invalid selection. Please choose a valid item number.")
+                        print(f"{Fore.RED}Invalid selection. Please choose a valid item number.{Fore.RESET}")
                 except (ValueError, IndexError):
-                    print("Invalid input. Please enter a valid item number.")
+                    print(f"{Fore.RED}Invalid input. Please enter a valid item number.{Fore.RESET}")
             time.sleep(2)
             self.home()  # Return to home options when done shopping
 
@@ -430,9 +433,9 @@ with open("shopItems.txt", "r") as shopItems:
                     if 1 <= attack <= num_moves:
                         break  # Exit loop if the input is valid
                     else:
-                        print(f"Invalid choice. Please choose a number between 1 and {num_moves}.")
+                        print(f"{Fore.RED}Invalid choice. Please choose a number between 1 and {num_moves}.{Fore.RESET}")
                 except ValueError:
-                    print("Invalid input. Please enter a number.")
+                    print(f"{Fore.RED}Invalid input. Please enter a number.{Fore.RESET}")
             
             chance = random.randint(1,3) == 1
             if chance:
@@ -544,9 +547,9 @@ with open("shopItems.txt", "r") as shopItems:
                             else:
                                 print(f"You do not have any {item.upper()}s left.")
                         else:
-                            print("Invalid selection. Please select a valid number.")
+                            print(f"{Fore.RED}Invalid selection. Please select a valid number.{Fore.RESET}")
                     except (ValueError, IndexError):
-                        print("Invalid input. Please enter a valid number.")
+                        print(f"{Fore.RED}Invalid input. Please enter a valid number.{Fore.RESET}")
 
                 # Process turn mechanics
                 if trainer:
@@ -586,9 +589,9 @@ with open("shopItems.txt", "r") as shopItems:
                         poke = self._pokemonClassList[choice]
                         valid = True  # Exit the loop once valid selection is made
                     else:
-                        print(f"Invalid choice. Please select a number between 1 and {len(self._pokemonClassList)}.")
+                        print(f"{Fore.RED}Invalid choice. Please select a number between 1 and {len(self._pokemonClassList)}.{Fore.RESET}")
                 except ValueError:
-                    print("Invalid input. Please enter a valid number.")
+                    print(f"{Fore.RED}Invalid input. Please enter a valid number.{Fore.RESET}")
 
             pokemon = poke
 
@@ -621,9 +624,9 @@ with open("shopItems.txt", "r") as shopItems:
                         pokemon = self._pokemonClassList[choice]
                         valid = True  # Exit the loop once valid selection is made
                     else:
-                        print(f"Invalid choice. Please select a number between 1 and {len(self._pokemonClassList)}.")
+                        print(f"{Fore.RED}Invalid choice. Please select a number between 1 and {len(self._pokemonClassList)}.{Fore.RESET}")
                 except ValueError:
-                    print("Invalid input. Please enter a valid number.")
+                    print(f"{Fore.RED}Invalid input. Please enter a valid number.{Fore.RESET}")
 
             
             while True:
@@ -638,9 +641,9 @@ with open("shopItems.txt", "r") as shopItems:
                     if 1 <= attack <= num_moves:
                         break  # Exit loop if the input is valid
                     else:
-                        print(f"Invalid choice. Please choose a number between 1 and {num_moves}.")
+                        print(f"{Fore.RED}Invalid choice. Please choose a number between 1 and {num_moves}.{Fore.RESET}")
                 except ValueError:
-                    print("Invalid input. Please enter a number.")
+                    print(f"{Fore.RED}Invalid input. Please enter a number.{Fore.RESET}")
 
             pokemon.reset_pp(attack)
             return
@@ -659,16 +662,16 @@ with open("shopItems.txt", "r") as shopItems:
                         poke = self._pokemonClassList[choice]
                         valid = True  # Exit the loop once valid selection is made
                     else:
-                        print(f"Invalid choice. Please select a number between 1 and {len(self._pokemonClassList)}.")
+                        print(f"{Fore.RED}Invalid choice. Please select a number between 1 and {len(self._pokemonClassList)}.{Fore.RESET}")
                 except ValueError:
-                    print("Invalid input. Please enter a valid number.")
+                    print(f"{Fore.RED}Invalid input. Please enter a valid number.{Fore.RESET}")
 
             valid = False
             while not valid:
                 try:
                     count = int(input("How many rare candies would you like to use? "))
                 except:
-                    print("Invalid input. Please enter a valid number.")
+                    print(f"{Fore.RED}Invalid input. Please enter a valid number.{Fore.RESET}")
 
                 if self._inventory["rare candy"]-count<0:
                     print("You do not have enough rare candies")
@@ -855,10 +858,12 @@ with open("shopItems.txt", "r") as shopItems:
             trainerPokemon = []
             healingItems = []
             amountItems = random.randint(2,4)
-            for i in range(amountItems):
+            count = 0
+            while count != amountItems:
                 item = random.choice(self._shopItems)[0]
                 if item not in ["pokeball", "great ball", "ultra ball", "rare candy"]:
                     healingItems.append(item)
+                    count+=1
             for i in range(length):
                 all_data = card.get_all_hero_data(random.choice(pokemonList))
                 other = card.create_card_trainer(all_data, pokemonList)
@@ -887,12 +892,13 @@ with open("shopItems.txt", "r") as shopItems:
             time.sleep(2)
             trainerPokemon = []
             healingItems = []
-            count=random.randint(4,6)
-            for i in range(count):
+            count = 0
+            amountItems = random.randint(4,6)
+            while count != amountItems:
                 item = random.choice(self._shopItems)[0]
                 if item not in ["pokeball", "great ball", "ultra ball", "rare candy"]:
                     healingItems.append(item)
-                    count-=1
+                    count+=1
             for i in range(6):
                 all_data = card.get_all_hero_data(random.choice(pokemonList))
                 other = card.create_card_trainer(all_data, pokemonList)
@@ -957,9 +963,9 @@ with open("shopItems.txt", "r") as shopItems:
                             else:
                                 print(f"You do not have any {item.upper()}s left.")
                         else:
-                            print("Invalid selection. Please select a valid number.")
+                            print(f"{Fore.RED}Invalid selection. Please select a valid number.{Fore.RED}")
                     except (ValueError, IndexError):
-                        print("Invalid input. Please enter a valid number.")
+                        print(f"{Fore.RED}Invalid input. Please enter a valid number.{Fore.RED}")
 
             func()  # Call the provided function as a callback
 
@@ -980,7 +986,7 @@ with open("shopItems.txt", "r") as shopItems:
                 try:
                     pokemon = int(input("Enter a number: "))
                 except:
-                    print("Invalid input. Please enter a valid number.")
+                    print(f"{Fore.RED}Invalid input. Please enter a valid number.{Fore.RESET}")
                     time.sleep(1)
                     continue
                 if pokemon in [1,2,3,4]:
@@ -1051,10 +1057,10 @@ with open("shopItems.txt", "r") as shopItems:
                             print("You only have one pokemon")
                         
                     else:
-                        print("Invalid choice. Please enter 1 to get info or 2 to switch Pokémon.")
+                        print(f"{Fore.RED}Invalid choice. Please enter 1 to get info or 2 to switch Pokémon.{Fore.RESET}")
                 
                 except ValueError:
-                    print("Invalid input. Please enter a valid number.")
+                    print(f"{Fore.RED}Invalid input. Please enter a valid number.{Fore.RESET}")
             func()
 
         def pokemonInfo(self):
@@ -1074,9 +1080,9 @@ with open("shopItems.txt", "r") as shopItems:
                         self._pokemonClassList[choice].printData(False)  # Show detailed info about the chosen Pokémon
                         valid = True  # Exit the loop once valid selection is made
                     else:
-                        print(f"Invalid choice. Please select a number between 1 and {len(self._pokemonClassList)}.")
+                        print(f"{Fore.RED}Invalid choice. Please select a number between 1 and {len(self._pokemonClassList)}.{Fore.RESET}")
                 except ValueError:
-                    print("Invalid input. Please enter a valid number.")
+                    print(f"{Fore.RED}Invalid input. Please enter a valid number.{Fore.RESET}")
             time.sleep(2)
             return
 
@@ -1095,7 +1101,7 @@ with open("shopItems.txt", "r") as shopItems:
                     
                     if 0 <= choice < len(self._pokemonClassList):
                         if self._pokemonClassList[choice].isFainted():
-                            print("You cannot switch in a fainted pokemon")
+                            print(f"{Fore.RED}You cannot switch in a fainted pokemon{Fore.RESET}")
                         else:
                             # Move the selected Pokémon to the first position
                             poke = self._pokemonClassList.pop(choice)
@@ -1112,9 +1118,9 @@ with open("shopItems.txt", "r") as shopItems:
                             elif fainted:
                                 self.fightOptions()
                     else:
-                        print(f"Invalid choice. Please select a number between 1 and {len(self._pokemonClassList)}.")
+                        print(f"{Fore.RED}Invalid choice. Please select a number between 1 and {len(self._pokemonClassList)}.{Fore.RESET}")
                 except ValueError:
-                    print("Invalid input. Please enter a valid number.")
+                    print(f"{Fore.RED}Invalid input. Please enter a valid number.{Fore.RESET}")
             return
 
         def printPokemon(self):
@@ -1152,9 +1158,9 @@ with open("shopItems.txt", "r") as shopItems:
                             pokemon_name = self._pokemonList.pop(choice)
                             valid = True  # Exit the loop when a valid choice is made
                         else:
-                            print(f"Invalid choice. Please select a number between 1 and {len(self._pokemonClassList)}.")
+                            print(f"{Fore.RED}Invalid choice. Please select a number between 1 and {len(self._pokemonClassList)}.{Fore.RESET}")
                     except ValueError:
-                        print("Invalid input. Please enter a valid number.")
+                        print(f"{Fore.RED}Invalid input. Please enter a valid number.{Fore.RESET}")
 
                 valid = False
                 while not valid:
@@ -1166,9 +1172,9 @@ with open("shopItems.txt", "r") as shopItems:
                             pokemon_name_box = self._boxNames.pop(choiceBox)
                             valid = True  # Exit the loop when a valid choice is made
                         else:
-                            print(f"Invalid choice. Please select a number between 1 and {len(self._box)}.")
+                            print(f"{Fore.RED}Invalid choice. Please select a number between 1 and {len(self._box)}.{Fore.RESET}")
                     except ValueError:
-                        print("Invalid input. Please enter a valid number.")
+                        print(f"{Fore.RED}Invalid input. Please enter a valid number.{Fore.RESET}")
 
                 print(f"You put {pokemon_name.upper()} in the box")
                 print(f"{pokemon_name_box.upper()} joined your lineup")
