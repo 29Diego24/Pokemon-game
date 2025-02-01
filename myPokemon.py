@@ -442,27 +442,27 @@ class Pokemon:
                 print(f"{self._name} used {name} and dealt {int(damage)} damage to {other._name}!")
             
             if "Fire" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 4) == 1
+                chance = random.randint(1, 5) == 1
                 if chance:
                     other.giveeffect("burn")
             elif "Psychic" in self._energy[attackIndex-1] or self._type in ["Psychic", "Darkness"]:
-                chance = random.randint(1, 3) == 1
+                chance = random.randint(1, 4) == 1
                 if chance:
                     other.giveeffect("confusion")
             elif "Fighting" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 3) == 1
+                chance = random.randint(1, 5) == 1
                 if chance:
                     other.giveeffect("flinch")
             elif "Water" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 4) == 1
+                chance = random.randint(1, 5) == 1
                 if chance:
                     other.giveeffect("freeze")
             elif "Lightning" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 4) == 1
+                chance = random.randint(1, 5) == 1
                 if chance:
                     other.giveeffect("paralysis")
             elif "Grass" in self._energy[attackIndex-1]:
-                chance = random.randint(1, 4) == 1
+                chance = random.randint(1, 5) == 1
                 if chance:
                     effect = random.randint(1,2) == 1
                     if effect:

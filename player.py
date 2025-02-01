@@ -1130,10 +1130,10 @@ with open("shopItems.txt", "r") as shopItems:
             for idx, poke in enumerate(self._pokemonClassList, start=1):
                 if poke.isFainted():
                     print(f"{idx}. {Fore.RED}{poke._name}{Fore.RESET}")  # Display Pokémon name with its position number
-                elif poke._hp != poke.fullhp:
+                elif poke._hp != poke._fullhp:
                     print(f"{idx}. {Fore.LIGHTYELLOW_EX}{poke._name}{Fore.RESET}")  # Display Pokémon name with its position number
                 else:
-                    print(f"{idx}. {Fore.LIGHTBLUE_EX}{poke._name}")  # Display Pokémon name with its position number
+                    print(f"{idx}. {Fore.LIGHTBLUE_EX}{poke._name}{Fore.RESET}")  # Display Pokémon name with its position number
        
         def printBox(self):
             """
