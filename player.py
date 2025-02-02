@@ -145,9 +145,9 @@ with open("shopItems.txt", "r") as shopItems:
             time.sleep(5)
             print(f"\n  {Fore.LIGHTYELLOW_EX}- Electric attacks can paralyze gives the other pokemon a high chance to not attack")
             time.sleep(5)
-            print(f"\n  {Fore.MAGENTA}- Psychic attacks can confuse and give the other pokemon a chance to hit itself dealing some damage")
+            print(f"\n  {Fore.MAGENTA}- Psychic attacks and types can confuse and give the other pokemon a chance to hit itself dealing some damage")
             time.sleep(5)
-            print(f"\n  {Fore.RED}- Fighting attacks can cause flinches which causes pokemon to not attack")
+            print(f"\n  {Fore.RED}- Fighting attacks and types can cause flinches which causes pokemon to not attack")
             time.sleep(5)
             print(f"\n  {Fore.BLACK}- Darkness types can confuse and give the other pokemon a chance to hit itself dealing some damage{Fore.RESET}")
             

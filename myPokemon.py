@@ -449,7 +449,7 @@ class Pokemon:
                 chance = random.randint(1, 4) == 1
                 if chance:
                     other.giveeffect("confusion")
-            elif "Fighting" in self._energy[attackIndex-1]:
+            elif "Fighting" in self._energy[attackIndex-1] or "Fighting"in self._type:
                 chance = random.randint(1, 5) == 1
                 if chance:
                     other.giveeffect("flinch")
