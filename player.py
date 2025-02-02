@@ -85,8 +85,132 @@ with open("shopItems.txt", "r") as shopItems:
             intro = input("Do you want instructions on how to play (y/n): ")
             if intro.lower() == "y":
                 self.intro()
+            time.sleep(2)
             self.getPokemon()  # Call method to let the player choose their first Pokémon
-        
+
+        def intro(self):
+            space = " "
+            time.sleep(2)
+            print(f"\n{space:<30}How To Play")
+            time.sleep(2)
+            print(f"{Style.BRIGHT}Typings:{Style.RESET_ALL}")
+            time.sleep(2)
+            print("\nThere are 11 types in this game: ")
+            time.sleep(2)
+            color = Fore.LIGHTYELLOW_EX
+            print(f"{color}  - Electric")
+            time.sleep(2)
+            color = Fore.LIGHTRED_EX
+            print(f"{color}  - Fire")
+            time.sleep(2)
+            color = Fore.MAGENTA
+            print(f"{color}  - Psychic")
+            time.sleep(2)
+            color = Fore.LIGHTCYAN_EX
+            print(f"{color}  - Water")
+            time.sleep(2)
+            color = Fore.LIGHTGREEN_EX
+            print(f"{color}  - Grass")
+            time.sleep(2)
+            color = Fore.RED
+            print(f"{color}  - Fighting")
+            time.sleep(2)
+            color = Fore.LIGHTBLACK_EX
+            print(f"{color}  - Metal")
+            time.sleep(2)
+            color = Fore.LIGHTMAGENTA_EX
+            print(f"{color}  - Fairy")
+            time.sleep(2)
+            color = Fore.BLUE
+            print(f"{color}  - Dragon")
+            time.sleep(2)
+            color = Fore.BLACK
+            print(f"{color}  - Darkness")
+            time.sleep(2)
+            color = Fore.RESET
+            print(f"{color}  - Normal")
+            time.sleep(2)
+
+            print(f"\n{Style.BRIGHT}Status effects:{Style.RESET_ALL}")
+            time.sleep(2)
+            print("\nSome attacks give special status effects:")
+            time.sleep(2)
+            print(f"\n  {Fore.LIGHTRED_EX}- Fire attacks can give burn that deal damage after each turn")
+            time.sleep(5)
+            print(f"\n  {Fore.LIGHTCYAN_EX}- Water attacks can freeze that gives the other pokemon a high chance and not attack")
+            time.sleep(5)
+            print(f"\n  {Fore.LIGHTGREEN_EX}- Grass attacks can give poison that deal damage after each turn")
+            time.sleep(5)
+            print(f"\n  {Fore.LIGHTGREEN_EX}- Grass attacks can also make other pokemon go to sleep that gives the other pokemon a higher chance not to attack")
+            time.sleep(5)
+            print(f"\n  {Fore.LIGHTYELLOW_EX}- Electric attacks can paralyze gives the other pokemon a high chance to not attack")
+            time.sleep(5)
+            print(f"\n  {Fore.MAGENTA}- Psychic attacks can confuse and give the other pokemon a chance to hit itself dealing some damage")
+            time.sleep(5)
+            print(f"\n  {Fore.RED}- Fighting attacks can cause flinches which causes pokemon to not attack")
+            time.sleep(5)
+            print(f"\n  {Fore.BLACK}- Darkness types can confuse and give the other pokemon a chance to hit itself dealing some damage{Fore.RESET}")
+            
+            time.sleep(2)
+            print(f"\n{Style.BRIGHT}Map:{Style.RESET_ALL}")
+            time.sleep(2)
+            print("\nIn the map the green spaces have a chance to have an item or a pokemon")
+            time.sleep(2)
+            print("The red spaces are trainers who have the same amount of pokemon as you do and also have a few item")
+            time.sleep(2)
+            print("The red 'X' spaces are gym trainers who have 6 pokemon and a lot of items")
+
+            time.sleep(2)
+            print(f"\n{Style.BRIGHT}Options:{Style.RESET_ALL}")
+            time.sleep(2)
+            print("\nThere are many options:")
+            time.sleep(2)
+            print("  - Bag: open your inventory and use an item")
+            time.sleep(2)
+            print("  - Move: move in any direction")
+            time.sleep(2)
+            print("  - Pokemon: you can switch your pokemon or get info on a pokemon")
+            time.sleep(2)
+            print("  - Home: send your player home")
+
+            time.sleep(2)
+            print(f"\n{Style.BRIGHT}Home:{Style.RESET_ALL}")
+            time.sleep(2)
+            print("\nThere are many options when at home:")
+            time.sleep(2)
+            print("  - Bag: open your inventory and use an item")
+            time.sleep(2)
+            print("  - Back: go back to regular menu")
+            time.sleep(2)
+            print("  - Pokemon: you can switch your pokemon or get info on a pokemon")
+            time.sleep(2)
+            print("  - Heal: heal all of your pokemon")
+            time.sleep(2)
+            print("  - Box: switch out a pokemon from the box")
+
+            time.sleep(2)
+            print(f"\n{Style.BRIGHT}Battling:{Style.RESET_ALL}")
+            time.sleep(2)
+            print("\nThere are many options when battling:")
+            time.sleep(2)
+            print("  - Bag: open your inventory and use an item but it will take your turn so the opposing pokemon will attack")
+            time.sleep(2)
+            print("  - Run: you can run away from pokemon but you cannot run from trainers or gym trainers")
+            time.sleep(2)
+            print("  - Pokemon: you can switch your pokemon or get info on a pokemon")
+            time.sleep(2)
+            print("  - Battle: attack the other pokemon")
+            
+            time.sleep(2)
+            print(f"\n{Style.BRIGHT}Catching:{Style.RESET_ALL}")
+            time.sleep(2)
+            print("\nWhen you throw a pokeball then the chance to catch a pokemon is higher if the pokemon haas a status effect or is low on HP")
+            time.sleep(2)
+            print("\nIf there are more than six pokemon in your party then that pokemon is sent to the box where you can switch it out at home\n")
+            time.sleep(2)
+            return
+
+
         def printOptions(self):
             # Print available options for the player
             print("----------------------------")
@@ -801,7 +925,13 @@ with open("shopItems.txt", "r") as shopItems:
             if int(catch_probability) > 75:
                 catch_probability = catch_probability/2
             if pokemon._hp<20:
-                catch_probability = catch_probability*2
+                if catch_probability < 10:
+                    catch_probability+=40
+                else:
+                    catch_probability = catch_probability*2
+
+            if int(catch_probability) < 10:
+                catch_probability+=20
             
             return catch_probability # Return as a percentage
       
@@ -996,7 +1126,7 @@ with open("shopItems.txt", "r") as shopItems:
                     self._pokemonList.append(poke.upper())  # Add chosen Pokémon to the list
                     valid = True  # Exit the loop when a valid choice is made
                 else:
-                    print("Sorry I do not have that. Pick something else.")  # Invalid choice message
+                    print(f"{Fore.RED}Sorry I do not have that. Pick something else.{Fore.RESET}")  # Invalid choice message
                     time.sleep(2)
             print(Style.RESET_ALL)
             # Get Pokémon data using the `card` module
