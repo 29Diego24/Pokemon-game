@@ -160,7 +160,7 @@ class Trainer:
 
         # Consider switching Pokémon or healing.
         if self._pokemon._hp - 1.5*predicted_damage <= 0:
-            if len(available_pokemon) > 1:
+            if len(available_pokemon) > 1 and self._pokemon._hp <= 15:
                 self.switch_to_valid_pokemon()
                 return
             else:
