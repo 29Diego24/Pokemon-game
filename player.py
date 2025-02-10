@@ -154,6 +154,8 @@ with open("shopItems.txt", "r") as shopItems:
             time.sleep(2)
             print(f"\n{Style.BRIGHT}Map:{Style.RESET_ALL}")
             time.sleep(2)
+            print("You are the blue circle in the middle of the map")
+            time.sleep(2)
             print("\nIn the map the green spaces have a chance to have an item or a pokemon")
             time.sleep(5)
             print("The red spaces are trainers who have the same amount of pokemon as you do and also have a few item")
@@ -1011,11 +1013,11 @@ with open("shopItems.txt", "r") as shopItems:
             print(f"You have {len(self._pokemonClassList)} pokemon")
 
             time.sleep(2)
-            print(f"Your opponent sent out {self._otherPokemon._name}")
-            print(f"You sent out {self._pokemon._name}")
-            time.sleep(2)
 
             self._trainer = trainerBattle.Trainer(trainerPokemon, self._otherPokemon, self._pokemon, healingItems, self._status_items, self._healing_items)
+            print(f"Your opponent sent out {self._trainer._pokemon._name}")
+            print(f"You sent out {self._pokemon._name}")
+            time.sleep(2)
             self.fightOptions(True)
 
         def gym(self):
@@ -1046,11 +1048,11 @@ with open("shopItems.txt", "r") as shopItems:
             print(f"You have {len(self._pokemonClassList)} pokemon")
 
             time.sleep(2)
-            print(f"Your opponent sent out {self._otherPokemon._name}")
-            print(f"You sent out {self._pokemon._name}")
-            time.sleep(2)
 
             self._trainer = trainerBattle.Trainer(trainerPokemon, self._otherPokemon, self._pokemon, healingItems, self._status_items, self._healing_items)
+            print(f"Your opponent sent out {self._trainer._pokemon._name}")
+            print(f"You sent out {self._pokemon._name}")
+            time.sleep(2)
             self.fightOptions(True)
 
         # def trainerOptions(self):

@@ -157,7 +157,6 @@ class Pokemon:
                 print(" - Normal")
 
         print(f"{Fore.RESET}Attacks:")
-        print(self._energy)
         for attack_name, damage in self._attacks.items():
             index = list(self._attacks.keys()).index(attack_name)
             energy_type = self._energy[index]
@@ -445,7 +444,7 @@ class Pokemon:
                 chance = random.randint(1, 5) == 1
                 if chance:
                     other.giveeffect("burn")
-            elif "Psychic" in self._energy[attackIndex-1] or self._type in ["Psychic", "Darkness"]:
+            elif "Psychic" in self._energy[attackIndex-1] or "Darkness" in self._energy[attackIndex-1] or self._type in ["Psychic", "Darkness"]:
                 chance = random.randint(1, 4) == 1
                 if chance:
                     other.giveeffect("confusion")

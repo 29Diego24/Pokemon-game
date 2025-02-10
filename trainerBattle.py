@@ -4,7 +4,8 @@ from colorama import Fore, Back, Style
 class Trainer:
     def __init__(self, pokemonList, myPokemon, other, heals, statusheals, heal):
         self._pokemonList = pokemonList
-        self._pokemon = pokemonList[0]
+        self._pokemon = self._pokemonList[0]
+        self.best_pokemon()
         self._other = other
         self._heals = heals
         self._statusheals = statusheals
@@ -19,13 +20,10 @@ class Trainer:
 
     def switch_to_valid_pokemon(self):
         """Switch to a valid (non-fainted) Pokémon if possible."""
-        for pokemon in self._pokemonList:
-            if not pokemon.isFainted() and pokemon != self._pokemon:
-                self._pokemonList.insert(0, pokemon)
-                self._pokemon = pokemon
-                print(f"The trainer switched to {self._pokemon._name}")
-                self._faintedPokemon = None
-                return True
+        if self.best_pokemon():
+            print(f"The trainer switched to {self._pokemon._name}")
+            self._faintedPokemon = None
+            return True
         return False
 
     def heal(self, force_healing=False, revive=False):
@@ -94,6 +92,20 @@ class Trainer:
             if not available_pokemon:
                 return True
             
+    def best_pokemon(self):
+        best = 0
+        for pokemon in self._pokemonList:
+            if not pokemon.isFainted():
+                attackDamage = max(pokemon._attacks.values())
+                if attackDamage > best:
+                    best = attackDamage
+                    index = self._pokemonList.index(pokemon)
+
+        if self._pokemon == self._pokemonList[index]:
+            return False
+        self._pokemon = self._pokemonList[index]
+        return True
+            
     def next_largest(self, max_vals):
         arr = list(self._pokemon._attacks.values())
         second_largest = arr[0]
@@ -151,11 +163,6 @@ class Trainer:
                     largest.append(self.next_largest(strongest_attack))
                     attack_index = list(self._pokemon._attacks.values()).index(largest[-1]) + 1
                     valid = self._pokemon.attack(attack_index, self._other)
-                return
-            
-        if len(available_pokemon) > 3:
-            if strongest_attack <= 12:
-                self.switch_to_valid_pokemon()
                 return
 
         # Consider switching Pokémon or healing.
